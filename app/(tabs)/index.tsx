@@ -1,98 +1,116 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import skills from '../../skills.json';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <View style={styles.screen}>
+      <View style={styles.card}>
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('../../assets/catavatar.jpg')}
+          style={styles.profileImage}
+          resizeMode="cover"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <Text style={styles.name}>Adna Jasarevic</Text>
+
+        <Text style={styles.bio}>
+          Computer science student with a strong interest in cybersecurity, digital
+          forensics, and secure software development. Passionate about understanding
+          how systems work under the hood, identifying vulnerabilities, and building
+          secure and reliable applications. Currently working on projects related to
+          memory analysis, system security, and modern web and mobile technologies.
+        </Text>
+
+        <View style={styles.divider} />
+
+        <ScrollView contentContainerStyle={styles.skillsContainer}>
+          {skills.map((item, index) => (
+            <View
+              key={index}
+              style={[styles.skillTag, { backgroundColor: item.color }]}
+            >
+              <Text style={styles.skillText}>
+                {item.skill} {getLevelEmoji(item.level)}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </View>
   );
 }
 
+function getLevelEmoji(level: string) {
+  if (level === 'advanced') return '💪';
+  if (level === 'intermediate') return '👍';
+  if (level === 'beginner') return '🔥';
+  return '';
+}
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  screen: {
+    flex: 1,
+    backgroundColor: '#f3f3f3',
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    padding: 16,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  card: {
+    width: 330,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#cfcfcf',
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  profileImage: {
+    width: '100%',
+    height: 140,
+    marginBottom: 12,
+  },
+
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#222',
+    marginBottom: 10,
+  },
+
+  bio: {
+    fontSize: 13,
+    color: '#444',
+    lineHeight: 18,
+    marginBottom: 12,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: '#ccc',
+    marginVertical: 10,
+  },
+
+  skillsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+
+  skillTag: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    margin: 3,
+  },
+
+  skillText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#000',
   },
 });
