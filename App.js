@@ -12,7 +12,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
-  const API_KEY = "355d88f7c6e936a69ae8dfc60c51286d";
+  const API_KEY = "";
 
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
