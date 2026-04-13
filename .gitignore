@@ -1,0 +1,36 @@
+@"
+# Expo / React Native
+node_modules/
+.expo/
+.expo-shared/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Metro
+metro-error.log
+
+# Native
+*.hprof
+*.iws
+.idea/
+.vscode/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+"@ | Out-File -FilePath .gitignore -Encoding utf8
